@@ -1,50 +1,98 @@
+import heapq
+from functools import total_ordering
+
+@total_ordering
+class KeyDict(object):
+    def __init__(self, key, dct):
+        self.key = key
+        self.dct = dct
+
+    def __lt__(self, other):
+        return self.key < other.key
+
+    def __eq__(self, other):
+        return self.key == other.key
+
+    def __repr__(self):
+        return '{0.__class__.__name__}(key={0.key}, dct={0.dct})'.format(self)
+
 mapa_romania = {
-    'Arad': {'conexoes': [{'cidade': 'Zerind', 'distancia': 75},
+    'Arad': {'cidade': 'Arad',
+             'conexoes': [{'cidade': 'Zerind', 'distancia': 75},
                           {'cidade': 'Timisoara', 'distancia': 118},
                           {'cidade': 'Sibiu', 'distancia': 140}]},
-    'Sibiu': {'conexoes': [{'cidade': 'Fagaras', 'distancia': 99},
+    'Sibiu': {'cidade': 'Sibiu',
+              'conexoes': [{'cidade': 'Fagaras', 'distancia': 99},
                            {'cidade': 'Rimnicu Vilcea', 'distancia': 80},
                            {'cidade': 'Oradea', 'distancia': 151},
                            {'cidade': 'Arad', 'distancia': 140}]},
-    'Fagaras:': {'conexoes': [{'cidade': 'Bucharest', 'distancia': 211},
-                              {'cidade': 'Sibiu', 'distancia': 99}]},
-    'Rimnicu Vilcea': {'conexoes': [{'cidade': 'Craiova', 'distancia': 146},
-                                    {'cidade': 'Sibiu', 'distancia': 80},
-                                    {'cidade': 'Pitesti', 'distancia': 97}]},
-    'Pitesti': {'conexoes': [{'cidade': 'Bucharest', 'distancia': 101},
+    'Fagaras': {'cidade': 'Fagaras',
+                'conexoes': [{'cidade': 'Bucharest', 'distancia': 211},
+                             {'cidade': 'Sibiu', 'distancia': 99}]},
+    'Rimnicu Vilcea': {
+        'cidade': 'Rimnicu Vilcea',
+        'conexoes': [{'cidade': 'Craiova', 'distancia': 146},
+                     {'cidade': 'Sibiu', 'distancia': 80},
+                     {'cidade': 'Pitesti', 'distancia': 97}]},
+    'Pitesti': {'cidade': 'Pitesti',
+                'conexoes': [{'cidade': 'Bucharest', 'distancia': 101},
                              {'cidade': 'Rimnicu Vilcea', 'distancia': 97},
                              {'cidade': 'Craiova', 'distancia': 138}]},
-    'Bucharest': {'conexoes': [{'cidade': 'Fagaras', 'distancia': 211},
+    'Bucharest': {'cidade': 'Bucharest',
+                  'conexoes': [{'cidade': 'Fagaras', 'distancia': 211},
                                {'cidade': 'Pitesti', 'distancia': 101},
                                {'cidade': 'Urziceni', 'distancia': 85},
                                {'cidade': 'Giurgiu', 'distancia': 90}]},
-    'Giurgiu': {'conexoes': [{'cidade': 'Bucharest', 'distancia': 90}]},
-    'Urziceni': {'conexoes': [{'cidade': 'Bucharest', 'distancia': 85},
+    'Giurgiu': {'cidade': 'Giurgiu',
+                'conexoes': [{'cidade': 'Bucharest', 'distancia': 90}]},
+    'Urziceni': {'cidade': 'Urziceni',
+                 'conexoes': [{'cidade': 'Bucharest', 'distancia': 85},
                               {'cidade': 'Vaslui', 'distancia': 142},
                               {'cidade': 'Hirsova', 'distancia': 98},
                               ]},
-    'Hirsova': {'conexoes': [{'cidade': 'Urziceni', 'distancia': 98},
-                             {'cidade': 'Eforie', 'distancia': 86}]},
-    'Eforie': {'conexoes': [{'cidade': 'Hirsova', 'distancia': 86}]},
-    'Vaslui': {'conexoes': [{'cidade': 'Urziceni', 'distancia': 142},
-                            {'cidade': 'Iasi', 'distancia': 92}]},
-    'Iasi': {'conexoes': [{'cidade': 'Neamt', 'distancia': 87},
-                          {'cidade': 'Vaslui', 'distancia': 92}]},
-    'Neamt': {'conexoes': [{'cidade': 'Iasi', 'distancia': 87}]},
-    'Craiova': {'conexoes': [{'cidade': 'Pitesti', 'distancia': 138},
+    'Hirsova': {
+        'cidade': 'Hirsova',
+        'conexoes': [{'cidade': 'Urziceni', 'distancia': 98},
+                     {'cidade': 'Eforie', 'distancia': 86}]},
+    'Eforie': {
+        'cidade': 'Eforie',
+        'conexoes': [{'cidade': 'Hirsova', 'distancia': 86}]},
+    'Vaslui': {
+        'cidade': 'Vaslui',
+        'conexoes': [{'cidade': 'Urziceni', 'distancia': 142},
+                     {'cidade': 'Iasi', 'distancia': 92}]},
+    'Iasi': {
+        'cidade': 'Iasi',
+        'conexoes': [{'cidade': 'Neamt', 'distancia': 87},
+                     {'cidade': 'Vaslui', 'distancia': 92}]},
+    'Neamt': {'cidade': 'Neamt',
+              'conexoes': [{'cidade': 'Iasi', 'distancia': 87}]},
+    'Craiova': {'cidade': 'Craiova',
+                'conexoes': [{'cidade': 'Pitesti', 'distancia': 138},
                              {'cidade': 'Rimnicu Vilcea', 'distancia': 146},
                              {'cidade': 'Drobeta', 'distancia': 120}]},
-    'Drobeta': {'conexoes': [{'cidade': 'Craiova', 'distancia': 120},
-                             {'cidade': 'Mehadia', 'distancia': 75}]},
-    'Mehadia': {'conexoes': [{'cidade': 'Drobeta', 'distancia': 75},
-                             {'cidade': 'Lugoj', 'distancia': 70}]},
-    'Lugoj': {'conexoes': [{'cidade': 'Mehadia', 'distancia': 70},
-                           {'cidade': 'Timisoara', 'distancia': 111}]},
-    'Timisoara': {'conexoes': [{'cidade': 'Arad', 'distancia': 118},
-                               {'cidade': 'Lugoj', 'distancia': 111}]},
-    'Zerind': {'conexoes': [{'cidade': 'Arad', 'distancia': 75},
-                            {'cidade': 'Oradea', 'distancia': 71}]},
-    'Oradea': {'conexoes': [{'cidade': 'Zerind', 'distancia': 71},
+    'Drobeta': {
+        'cidade': 'Drobeta',
+        'conexoes': [{'cidade': 'Craiova', 'distancia': 120},
+                     {'cidade': 'Mehadia', 'distancia': 75}]},
+    'Mehadia': {
+        'cidade': 'Mehadia',
+        'conexoes': [{'cidade': 'Drobeta', 'distancia': 75},
+                     {'cidade': 'Lugoj', 'distancia': 70}]},
+    'Lugoj': {
+        'cidade': 'Lugoj',
+        'conexoes': [{'cidade': 'Mehadia', 'distancia': 70},
+                     {'cidade': 'Timisoara', 'distancia': 111}]},
+    'Timisoara': {
+        'cidade': 'Timisoara',
+        'conexoes': [{'cidade': 'Arad', 'distancia': 118},
+                     {'cidade': 'Lugoj', 'distancia': 111}]},
+    'Zerind': {
+        'cidade': 'Zerind',
+        'conexoes': [{'cidade': 'Arad', 'distancia': 75},
+                     {'cidade': 'Oradea', 'distancia': 71}]},
+    'Oradea': {'cidade': 'Zerind',
+               'conexoes': [{'cidade': 'Zerind', 'distancia': 71},
                             {'cidade': 'Sibiu', 'distancia': 151}]}
 }
 
@@ -58,7 +106,7 @@ heuristica_romania = {
     'Giurgiu': 77,
     'Hirsova': 151,
     'Iasi': 226,
-    'Lugov': 244,
+    'Lugoj': 244,
     'Mehadia': 241,
     'Neamt': 234,
     'Oradea': 380,
@@ -68,9 +116,25 @@ heuristica_romania = {
     'Timisoara': 329,
     'Urziceni': 80,
     'Vaslui': 199,
-    'Zerind': 374,
+    'Zerind': 374
 }
 
 
-def romania_astar():
-    print(mapa_romania.__len__())
+def romania_astar(inicio, objetivo):
+    caminho = {}
+    filaFechada = {}
+    filaAberta = []
+    heapq.heappush(filaAberta, KeyDict(0, mapa_romania[inicio]))
+    filaFechada[inicio] = 0
+    while filaAberta:
+        elemento_atual = heapq.heappop(filaAberta)[1]
+        for sucessor in mapa_romania[elemento_atual['cidade']]['conexoes']:
+            if sucessor['cidade'] == objetivo:
+                break
+            g = filaFechada[elemento_atual['cidade']] + int(sucessor['distancia'])
+            if sucessor['cidade'] not in filaFechada or g < filaFechada[sucessor['cidade']]:
+                filaFechada[sucessor['cidade']] = g
+                f = g + heuristica_romania[sucessor['cidade']]
+                heapq.heappush(filaAberta, KeyDict(f, mapa_romania[sucessor['cidade']]))
+                caminho[sucessor['cidade']] = elemento_atual
+    print(caminho)
