@@ -8,6 +8,12 @@ class Grafo:
     def adicionaAresta(self, x, y):
         self.grafo[x].append(y)
 
+    def exibeResultado(self, caminho):
+        result = ''
+        for idx, no in enumerate(caminho):
+            result += str(no) if (idx == len(caminho) - 1) else str(no) + '-'
+        print(result, end="")
+
     def buscaEmLargura(self, origem, objetivo):
         fila = []
         caminho = []
@@ -18,6 +24,7 @@ class Grafo:
             noAtual = fila.pop(0)
             caminho.append(noAtual)
             if noAtual == objetivo:
+                self.exibeResultado(caminho)
                 break
             for item in self.grafo[noAtual]:
                 if item in verticesVisitados:
@@ -26,9 +33,5 @@ class Grafo:
                 caminho.append(item)
                 verticesVisitados[item] = 1
                 if item == objetivo:
-                    result = ''
-                    for idx, no in enumerate(caminho):
-                        result += str(no) if (idx == len(caminho) - 1) else str(no) + '-'
-                    print(result, end="")
+                    self.exibeResultado(caminho)
                     return
-
