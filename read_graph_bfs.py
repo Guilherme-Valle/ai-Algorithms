@@ -22,16 +22,16 @@ class Grafo:
         verticesVisitados[origem] = 1
         while fila:
             noAtual = fila.pop(0)
-            caminho.append(noAtual)
+            if noAtual not in caminho:
+                caminho.append(noAtual)
             if noAtual == objetivo:
                 self.exibeResultado(caminho)
                 break
             for item in self.grafo[noAtual]:
-                if item in verticesVisitados:
-                    continue
-                fila.append(item)
-                caminho.append(item)
-                verticesVisitados[item] = 1
-                if item == objetivo:
-                    self.exibeResultado(caminho)
-                    return
+                if item not in verticesVisitados:
+                    fila.append(item)
+                    caminho.append(item)
+                    verticesVisitados[item] = 1
+                    if item == objetivo:
+                        self.exibeResultado(caminho)
+                        return
