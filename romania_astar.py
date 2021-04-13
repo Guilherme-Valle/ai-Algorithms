@@ -1,21 +1,4 @@
 import heapq
-from functools import total_ordering
-
-@total_ordering
-class KeyDict(object):
-    def __init__(self, key, dct):
-        self.key = key
-        self.dct = dct
-
-    def __lt__(self, other):
-        return self.key < other.key
-
-    def __eq__(self, other):
-        return self.key == other.key
-
-    def __repr__(self):
-        return '{0.__class__.__name__}(key={0.key}, dct={0.dct})'.format(self)
-
 mapa_romania = {
     'Arad': {'cidade': 'Arad',
              'conexoes': [{'cidade': 'Zerind', 'distancia': 75},
@@ -124,10 +107,10 @@ def romania_astar(inicio, objetivo):
     caminho = {}
     filaFechada = {}
     filaAberta = []
-    heapq.heappush(filaAberta, KeyDict(0, mapa_romania[inicio]))
+    heapq.heappush(filaAberta, (0, inicio))
     filaFechada[inicio] = 0
     while filaAberta:
-        elemento_atual = heapq.heappop(filaAberta)[1]
+        elemento_atual = mapa_romania[heapq.heappop(filaAberta)[1]]
         for sucessor in mapa_romania[elemento_atual['cidade']]['conexoes']:
             if sucessor['cidade'] == objetivo:
                 break
@@ -135,6 +118,6 @@ def romania_astar(inicio, objetivo):
             if sucessor['cidade'] not in filaFechada or g < filaFechada[sucessor['cidade']]:
                 filaFechada[sucessor['cidade']] = g
                 f = g + heuristica_romania[sucessor['cidade']]
-                heapq.heappush(filaAberta, KeyDict(f, mapa_romania[sucessor['cidade']]))
-                caminho[sucessor['cidade']] = elemento_atual
+                heapq.heappush(filaAberta, (f, sucessor['cidade']))
+                caminho[sucessor['cidade']] = sucessor['cidade']
     print(caminho)
