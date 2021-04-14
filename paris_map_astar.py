@@ -1,7 +1,10 @@
 from collections import defaultdict
+import heapq
+import re
 
 ESTACOES = {
-    'E1': {'E2': 10,
+    'E1': {'E1': 0,
+           'E2': 10,
            'E3': 18.5,
            'E4': 24.8,
            'E5': 36.4,
@@ -17,6 +20,7 @@ ESTACOES = {
            'CONEXOES': ['E2'],
            'LINHA': 'AZUL'},
     'E2': {'E1': 10,
+           'E2': 0,
            'E3': 8.5,
            'E4': 14.8,
            'E5': 26.6,
@@ -33,6 +37,7 @@ ESTACOES = {
            'LINHA': 'AZUL'},
     'E3': {'E1': 18.5,
            'E2': 8.5,
+           'E3': 0,
            'E4': 6.3,
            'E5': 18.2,
            'E6': 20.6,
@@ -49,6 +54,7 @@ ESTACOES = {
     'E4': {'E1': 24.8,
            'E2': 14.8,
            'E3': 6.3,
+           'E4': 0,
            'E5': 12,
            'E6': 14.4,
            'E7': 11.5,
@@ -65,6 +71,7 @@ ESTACOES = {
            'E2': 26.6,
            'E3': 18.2,
            'E4': 12,
+           'E5': 0,
            'E6': 3,
            'E7': 2.4,
            'E8': 19.4,
@@ -81,6 +88,7 @@ ESTACOES = {
            'E3': 20.6,
            'E4': 14.4,
            'E5': 3,
+           'E6': 0,
            'E7': 3.3,
            'E8': 22.3,
            'E9': 25.7,
@@ -97,6 +105,7 @@ ESTACOES = {
            'E4': 11.5,
            'E5': 2.4,
            'E6': 3.3,
+           'E7': 0,
            'E8': 20,
            'E9': 23,
            'E10': 27.3,
@@ -113,6 +122,7 @@ ESTACOES = {
            'E5': 19.4,
            'E6': 22.3,
            'E7': 20,
+           'E8': 0,
            'E9': 8.2,
            'E10': 20.3,
            'E11': 16.1,
@@ -129,6 +139,7 @@ ESTACOES = {
            'E6': 25.7,
            'E7': 23,
            'E8': 8.2,
+           'E9': 0,
            'E10': 13.5,
            'E11': 11.2,
            'E12': 10.9,
@@ -145,6 +156,7 @@ ESTACOES = {
             'E7': 27.3,
             'E8': 20.3,
             'E9': 13.5,
+            'E10': 0,
             'E11': 17.6,
             'E12': 24.2,
             'E13': 18.7,
@@ -161,6 +173,7 @@ ESTACOES = {
             'E8': 16.1,
             'E9': 11.2,
             'E10': 17.6,
+            'E11': 0,
             'E12': 24.2,
             'E13': 18.7,
             'E14': 21.2,
@@ -177,6 +190,7 @@ ESTACOES = {
             'E9': 10.9,
             'E10': 24.2,
             'E11': 14.2,
+            'E12': 0,
             'E13': 28.8,
             'E14': 33.6,
             'CONEXOES': ['E8'],
@@ -193,6 +207,7 @@ ESTACOES = {
             'E10': 18.7,
             'E11': 31.5,
             'E12': 28.8,
+            'E13': 0,
             'E14': 5.1,
             'CONEXOES': ['E3', 'E4', 'E14'],
             'LINHA': 'AZUL'},
@@ -209,14 +224,41 @@ ESTACOES = {
             'E11': 35.5,
             'E12': 33.6,
             'E13': 5.1,
+            'E14': 0,
             'CONEXOES': ['E13'],
             'LINHA': 'AZUL'},
 
 }
 
 
+def removeLetras(string):
+    return re.sub('[^0-9]', '', string)
+
+
 def distanciaEntreEstacoes(origem, destino):
     return ESTACOES[origem][destino]
 
-def astar(origem, destino):
 
+def astar(origem, destino):
+    caminho = []
+    filaAberta = []
+    heapq.heappush(filaAberta, (0, origem))
+    filaFechada = {}
+    filaFechada[origem] = 0
+    while filaAberta:
+        atual = heapq.heappop(filaAberta)[1]
+        caminho.append(atual)
+        if atual == destino:
+            print('Chegou ao destino')
+            caminho = map(removeLetras, caminho)
+            print('-'.join(caminho))
+            break
+        for conexao in ESTACOES[atual]['CONEXOES']:
+            if conexao in filaFechada:
+                continue
+            if not any(conexao == item for index, item in filaAberta):
+                g = filaFechada[atual] + distanciaEntreEstacoes(atual, conexao)
+                filaFechada[conexao] = g
+                f = g + distanciaEntreEstacoes(conexao, destino)
+                print("Analisando conexão " + conexao + ' do nó ' + atual + '. G = ' + str(g) + ' F = ' + str(f))
+                heapq.heappush(filaAberta, (f, conexao))

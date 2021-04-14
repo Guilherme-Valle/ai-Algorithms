@@ -2,9 +2,10 @@ from budget_dfs import solucao_balde_dfs
 from romania_astar import romania_astar
 from read_graph_bfs import Grafo
 from paris_map_astar import *
+import heapq
 
 if __name__ == '__main__':
-    print(distanciaEntreEstacoes('E1', 'E5'))
+    astar('E14', 'E3')
     # romania_astar('Arad', 'Bucharest')
     # grafo = Grafo()
     # grafo.adicionaAresta(1, 2)
