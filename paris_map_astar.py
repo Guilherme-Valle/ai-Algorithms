@@ -278,13 +278,10 @@ def verificaCaminho(caminho):
     return caminho
 
 
-# distancia/velocidade * 60
-
 def astar(origem, destino, velocidade, baldeacao):
     caminho = []
     nos_expandidos = []
     filaAberta = []
-    nos_processados = []
     heapq.heappush(filaAberta, (0, origem))
     filaFechada = {origem: 0}
     while filaAberta:
@@ -294,13 +291,11 @@ def astar(origem, destino, velocidade, baldeacao):
         if existeConexaoQueNaoEstaNaFilaFechada(ESTACOES[atual]['CONEXOES'], filaFechada) or atual == destino:
             caminho.append(atual)
         if atual == destino:
-            # print(caminho)
             caminho = verificaCaminho(caminho)
             caminho_string = '-'.join(map(removeLetras, caminho))
             nos_expandidos_string = '-'.join(map(removeLetras, nos_expandidos))
             tempo = (filaFechada[atual] / int(velocidade)) * 60
             print(nos_expandidos_string + "\n" + caminho_string + "\n" + "%.1f" % tempo)
-            # print(filaFechada)
             break
         for no in ESTACOES[atual]['CONEXOES']:
             conexao = no.split('-')[0]
@@ -316,15 +311,13 @@ def astar(origem, destino, velocidade, baldeacao):
 
                 g = filaFechada[atual] + distanciaRealEntreEstacoes(atual, conexao)
                 g += (int(velocidade) * int(baldeacao)) / 60 if tem_baldeacao else 0
-                bald = (int(velocidade) * int(baldeacao)) / 60 if tem_baldeacao else 0
-                # print(atual + ' -> ' + conexao + ': ' + str(filaFechada[atual]) + " + " + str(
-                #     distanciaRealEntreEstacoes(atual, conexao) + bald) + ' = ' + str(g) + ' (' + str((g/velocidade)*60) + ')')
                 if conexao in filaFechada:
                     filaFechada[conexao] = g if filaFechada[conexao] > g else filaFechada[conexao]
                 else:
                     filaFechada[conexao] = g
                 f = g + distanciaLinhaRetaEntreEstacoes(conexao, destino)
                 heapq.heappush(filaAberta, (f, conexao))
+
 
 entry = input().rstrip()
 inputs = entry.split(' ')
