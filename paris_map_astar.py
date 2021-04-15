@@ -17,8 +17,7 @@ ESTACOES = {
            'E12': 27.3,
            'E13': 27.6,
            'E14': 29.8,
-           'CONEXOES': ['E2'],
-           'LINHA': 'AZUL'},
+           'CONEXOES': ['E2-AZUL']},
     'E2': {'E1': 10,
            'E2': 0,
            'E3': 8.5,
@@ -33,8 +32,7 @@ ESTACOES = {
            'E12': 20.9,
            'E13': 19.1,
            'E14': 21.8,
-           'CONEXOES': ['E1', 'E10', 'E9', 'E3'],
-           'LINHA': 'AZUL'},
+           'CONEXOES': ['E1-AZUL', 'E10-AMARELA', 'E9-AMARELA', 'E3-AZUL']},
     'E3': {'E1': 18.5,
            'E2': 8.5,
            'E3': 0,
@@ -49,8 +47,7 @@ ESTACOES = {
            'E12': 19.1,
            'E13': 12.1,
            'E14': 16.6,
-           'CONEXOES': ['E2', 'E9', 'E4', 'E13'],
-           'LINHA': 'AZUL'},
+           'CONEXOES': ['E2-AZUL', 'E9-VERMELHA', 'E4-AZUL', 'E13-VERMELHA']},
     'E4': {'E1': 24.8,
            'E2': 14.8,
            'E3': 6.3,
@@ -65,8 +62,7 @@ ESTACOES = {
            'E12': 18.6,
            'E13': 12.8,
            'E14': 15.4,
-           'CONEXOES': ['E3', 'E13', 'E8', 'E5'],
-           'LINHA': 'AZUL'},
+           'CONEXOES': ['E3-AZUL', 'E13-VERDE', 'E8-VERDE', 'E5-AZUL']},
     'E5': {'E1': 36.4,
            'E2': 26.6,
            'E3': 18.2,
@@ -81,8 +77,7 @@ ESTACOES = {
            'E12': 24.8,
            'E13': 14.5,
            'E14': 17.9,
-           'CONEXOES': ['E4', 'E6', 'E7', 'E8'],
-           'LINHA': 'AZUL'},
+           'CONEXOES': ['E4-AZUL', 'E6-AZUL', 'E7-AMARELA', 'E8-AMARELA']},
     'E6': {'E1': 38.8,
            'E2': 29.1,
            'E3': 20.6,
@@ -97,8 +92,7 @@ ESTACOES = {
            'E12': 27.6,
            'E13': 15.2,
            'E14': 18.2,
-           'CONEXOES': ['E5'],
-           'LINHA': 'AZUL'},
+           'CONEXOES': ['E5-AZUL']},
     'E7': {'E1': 35.8,
            'E2': 26.1,
            'E3': 17.6,
@@ -113,8 +107,7 @@ ESTACOES = {
            'E12': 25.7,
            'E13': 12.4,
            'E14': 15.6,
-           'CONEXOES': ['E5'],
-           'LINHA': 'AZUL'},
+           'CONEXOES': ['E5-AMARELA']},
     'E8': {'E1': 25.4,
            'E2': 17.3,
            'E3': 13.6,
@@ -129,8 +122,7 @@ ESTACOES = {
            'E12': 6.4,
            'E13': 22.7,
            'E14': 27.6,
-           'CONEXOES': ['E4', 'E5', 'E9', 'E12'],
-           'LINHA': 'AZUL'},
+           'CONEXOES': ['E4-VERDE', 'E5-AMARELA', 'E9-AMARELA', 'E12-VERDE']},
     'E9': {'E1': 17.6,
            'E2': 10,
            'E3': 9.4,
@@ -145,8 +137,7 @@ ESTACOES = {
            'E12': 10.9,
            'E13': 21.2,
            'E14': 26.6,
-           'CONEXOES': ['E2', 'E3', 'E8', 'E11'],
-           'LINHA': 'AZUL'},
+           'CONEXOES': ['E2-AMARELA', 'E3-VERMELHA', 'E8-AMARELA', 'E11-VERMELHA']},
     'E10': {'E1': 9.1,
             'E2': 3.5,
             'E3': 10.3,
@@ -161,8 +152,7 @@ ESTACOES = {
             'E12': 24.2,
             'E13': 18.7,
             'E14': 21.2,
-            'CONEXOES': ['E2'],
-            'LINHA': 'AZUL'},
+            'CONEXOES': ['E2-AMARELA']},
     'E11': {'E1': 16.7,
             'E2': 15.5,
             'E3': 19.5,
@@ -177,8 +167,7 @@ ESTACOES = {
             'E12': 24.2,
             'E13': 18.7,
             'E14': 21.2,
-            'CONEXOES': ['E9'],
-            'LINHA': 'AZUL'},
+            'CONEXOES': ['E9-VERMELHA']},
     'E12': {'E1': 27.3,
             'E2': 20.9,
             'E3': 19.1,
@@ -193,8 +182,7 @@ ESTACOES = {
             'E12': 0,
             'E13': 28.8,
             'E14': 33.6,
-            'CONEXOES': ['E8'],
-            'LINHA': 'AZUL'},
+            'CONEXOES': ['E8-VERDE']},
     'E13': {'E1': 27.6,
             'E2': 19.1,
             'E3': 12.1,
@@ -209,8 +197,7 @@ ESTACOES = {
             'E12': 28.8,
             'E13': 0,
             'E14': 5.1,
-            'CONEXOES': ['E3', 'E4', 'E14'],
-            'LINHA': 'AZUL'},
+            'CONEXOES': ['E3-VERMELHA', 'E4-VERDE', 'E14-VERDE']},
     'E14': {'E1': 29.8,
             'E2': 21.8,
             'E3': 16.6,
@@ -225,8 +212,7 @@ ESTACOES = {
             'E12': 33.6,
             'E13': 5.1,
             'E14': 0,
-            'CONEXOES': ['E13'],
-            'LINHA': 'AZUL'},
+            'CONEXOES': ['E13-VERDE']},
 
 }
 
@@ -241,9 +227,19 @@ def distanciaEntreEstacoes(origem, destino):
 
 def existeConexaoQueNaoEstaNaFilaFechada(conexoes, fila):
     for conexao in conexoes:
+        conexao = conexao.split('-')[0]
         if conexao not in fila:
             return True
     return False
+
+
+def corLinhaConectandoAntecessores(estacao, conexoes):
+    for conexao in conexoes:
+        estacao_conexao = conexao.split('-')[0]
+        linha = conexao.split('-')[1]
+        if estacao == estacao_conexao:
+            return linha
+    return "Nao ha"
 
 
 # distancia/velocidade * 60
@@ -264,24 +260,31 @@ def astar(origem, destino, velocidade, baldeacao):
         if atual == destino:
             caminho_string = '-'.join(map(removeLetras, caminho))
             nos_expandidos_string = '-'.join(map(removeLetras, nos_expandidos))
-            print(filaFechada)
             distancia = (filaFechada[atual] / float(velocidade)) * 60
             print(nos_expandidos_string + "\n" + caminho_string + "\n" + "%.1f" % distancia)
             break
-        for conexao in ESTACOES[atual]['CONEXOES']:
+        for no in ESTACOES[atual]['CONEXOES']:
+            conexao = no.split('-')[0]
+            linhaAtual = no.split('-')[1]
             if conexao in filaFechada:
                 continue
             if not any(conexao == item for index, item in filaAberta):
+                tem_baldeacao = False
+                if len(caminho) > 1:
+                    if linhaAtual != corLinhaConectandoAntecessores(atual, ESTACOES[caminho[len(caminho) - 2]]["CONEXOES"]):
+                        tem_baldeacao = True
+
                 g = filaFechada[atual] + distanciaEntreEstacoes(atual, conexao)
+                g += (velocidade * baldeacao) / 60 if tem_baldeacao else 0
                 filaFechada[conexao] = g
                 f = g + distanciaEntreEstacoes(conexao, destino)
                 heapq.heappush(filaAberta, (f, conexao))
 
-#
-# entry = input().rstrip()
-# inputs = entry.split(' ')
-# origem = inputs[0]
-# destino = inputs[1]
-# velocidade = input().rstrip()
-# baldeacao = input().rstrip()
-# astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)
+
+entry = input().rstrip()
+inputs = entry.split(' ')
+origem = inputs[0]
+destino = inputs[1]
+velocidade = input().rstrip()
+baldeacao = input().rstrip()
+astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)
