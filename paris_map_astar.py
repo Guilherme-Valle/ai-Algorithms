@@ -164,9 +164,9 @@ ESTACOES = {
             'E9': 12.2,
             'E10': 17.6,
             'E11': 0,
-            'E12': 24.2,
-            'E13': 18.7,
-            'E14': 21.2,
+            'E12': 14.2,
+            'E13': 31.5,
+            'E14': 35.5,
             'CONEXOES': ['E9-VERMELHA']},
     'E12': {'E1': 27.3,
             'E2': 20.9,
@@ -241,6 +241,7 @@ def corLinhaConectandoAntecessores(estacao, conexoes):
             return linha
     return "Nao ha"
 
+
 def verificaSeHaConexao(origem, destino):
     for conexao in ESTACOES[destino]['CONEXOES']:
         estacao_conexao = conexao.split('-')[0]
@@ -248,11 +249,13 @@ def verificaSeHaConexao(origem, destino):
             return True
     return False
 
+
 def verificaCaminho(caminho):
     for index, percurso in enumerate(caminho):
-        if index != len(caminho) - 1 and not verificaSeHaConexao(percurso, caminho[index+1]):
-            caminho.remove(caminho[index+1])
+        if index != len(caminho) - 1 and not verificaSeHaConexao(percurso, caminho[index + 1]):
+            caminho.remove(caminho[index + 1])
     return caminho
+
 
 # distancia/velocidade * 60
 
@@ -272,7 +275,7 @@ def astar(origem, destino, velocidade, baldeacao):
             caminho = verificaCaminho(caminho)
             caminho_string = '-'.join(map(removeLetras, caminho))
             nos_expandidos_string = '-'.join(map(removeLetras, nos_expandidos))
-            distancia = (filaFechada[atual] / float(velocidade)) * 60
+            distancia = (filaFechada[atual] / int(velocidade)) * 60
             print(nos_expandidos_string + "\n" + caminho_string + "\n" + "%.1f" % distancia)
             break
         for no in ESTACOES[atual]['CONEXOES']:
@@ -285,10 +288,11 @@ def astar(origem, destino, velocidade, baldeacao):
                 if len(caminho) > 1:
                     if linhaAtual != corLinhaConectandoAntecessores(atual,
                                                                     ESTACOES[caminho[len(caminho) - 2]]["CONEXOES"]):
+                        # print("Baldeacao entre " + caminho[len(caminho) - 2] + ",  " +  atual +" e " + conexao)
                         tem_baldeacao = True
 
                 g = filaFechada[atual] + distanciaEntreEstacoes(atual, conexao)
-                g += (float(velocidade) * float(baldeacao)) / 60 if tem_baldeacao else 0
+                g += (int(velocidade) * int(baldeacao)) / 60 if tem_baldeacao else 0
                 filaFechada[conexao] = g
                 f = g + distanciaEntreEstacoes(conexao, destino)
                 heapq.heappush(filaAberta, (f, conexao))
