@@ -63,14 +63,14 @@ ESTACOES = {
            'E10': 16.7,
            'E11': 23.6,
            'E12': 18.6,
-           'E13': 10.6,
+           'E13': 12.8,
            'E14': 15.4,
            'CONEXOES': ['E3', 'E13', 'E8', 'E5'],
            'LINHA': 'AZUL'},
     'E5': {'E1': 36.4,
            'E2': 26.6,
            'E3': 18.2,
-           'E4': 12,
+           'E4': 13,
            'E5': 0,
            'E6': 3,
            'E7': 2.4,
@@ -239,25 +239,34 @@ def distanciaEntreEstacoes(origem, destino):
     return ESTACOES[origem][destino]
 
 
+def existeConexaoQueNaoEstaNaFilaFechada(conexoes, fila):
+    for conexao in conexoes:
+        if conexao not in fila:
+            return True
+    return False
+
+
 # distancia/velocidade * 60
 
 def astar(origem, destino, velocidade, baldeacao):
     caminho = []
+    nos_expandidos = []
     filaAberta = []
     heapq.heappush(filaAberta, (0, origem))
     filaFechada = {}
     filaFechada[origem] = 0
     while filaAberta:
         topo_fila = heapq.heappop(filaAberta)
-        f_atual = topo_fila[0]
         atual = topo_fila[1]
-        caminho.append(atual)
+        nos_expandidos.append(atual)
+        if existeConexaoQueNaoEstaNaFilaFechada(ESTACOES[atual]['CONEXOES'], filaFechada):
+            caminho.append(atual)
         if atual == destino:
-            caminho = map(removeLetras, caminho)
-            print('-'.join(caminho))
-            print('-'.join(caminho))
-            distancia = (f_atual/velocidade)*60
-            print("%.1f" % distancia)
+            caminho_string = '-'.join(map(removeLetras, caminho))
+            nos_expandidos_string = '-'.join(map(removeLetras, nos_expandidos))
+            print(filaFechada)
+            distancia = (filaFechada[atual] / float(velocidade)) * 60
+            print(nos_expandidos_string + "\n" + caminho_string + "\n" + "%.1f" % distancia)
             break
         for conexao in ESTACOES[atual]['CONEXOES']:
             if conexao in filaFechada:
@@ -268,7 +277,11 @@ def astar(origem, destino, velocidade, baldeacao):
                 f = g + distanciaEntreEstacoes(conexao, destino)
                 heapq.heappush(filaAberta, (f, conexao))
 
-
-entry = input().rstrip()
-inputs = entry.split(' ')
-astar('E' + str(inputs[0]), 'E' + str(inputs[1]), inputs[2], inputs[3])
+#
+# entry = input().rstrip()
+# inputs = entry.split(' ')
+# origem = inputs[0]
+# destino = inputs[1]
+# velocidade = input().rstrip()
+# baldeacao = input().rstrip()
+# astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)
