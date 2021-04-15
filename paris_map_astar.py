@@ -55,7 +55,7 @@ ESTACOES = {
            'E2': 14.8,
            'E3': 6.3,
            'E4': 0,
-           'E5': 12,
+           'E5': 13,
            'E6': 14.4,
            'E7': 11.5,
            'E8': 12.4,
@@ -239,19 +239,25 @@ def distanciaEntreEstacoes(origem, destino):
     return ESTACOES[origem][destino]
 
 
-def astar(origem, destino):
+# distancia/velocidade * 60
+
+def astar(origem, destino, velocidade, baldeacao):
     caminho = []
     filaAberta = []
     heapq.heappush(filaAberta, (0, origem))
     filaFechada = {}
     filaFechada[origem] = 0
     while filaAberta:
-        atual = heapq.heappop(filaAberta)[1]
+        topo_fila = heapq.heappop(filaAberta)
+        f_atual = topo_fila[0]
+        atual = topo_fila[1]
         caminho.append(atual)
         if atual == destino:
-            print('Chegou ao destino')
             caminho = map(removeLetras, caminho)
             print('-'.join(caminho))
+            print('-'.join(caminho))
+            distancia = (f_atual/velocidade)*60
+            print("%.1f" % distancia)
             break
         for conexao in ESTACOES[atual]['CONEXOES']:
             if conexao in filaFechada:
@@ -260,5 +266,9 @@ def astar(origem, destino):
                 g = filaFechada[atual] + distanciaEntreEstacoes(atual, conexao)
                 filaFechada[conexao] = g
                 f = g + distanciaEntreEstacoes(conexao, destino)
-                print("Analisando conexão " + conexao + ' do nó ' + atual + '. G = ' + str(g) + ' F = ' + str(f))
                 heapq.heappush(filaAberta, (f, conexao))
+
+
+#entry = input().rstrip()
+#inputs = entry.split(' ')
+#astar('E' + str(inputs[0]), 'E' + str(inputs[1]), inputs[2], inputs[3])
