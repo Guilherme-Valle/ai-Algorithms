@@ -275,7 +275,7 @@ def astar(origem, destino, velocidade, baldeacao):
                         tem_baldeacao = True
 
                 g = filaFechada[atual] + distanciaEntreEstacoes(atual, conexao)
-                g += (velocidade * baldeacao) / 60 if tem_baldeacao else 0
+                g += (float(velocidade) * float(baldeacao)) / 60 if tem_baldeacao else 0
                 filaFechada[conexao] = g
                 f = g + distanciaEntreEstacoes(conexao, destino)
                 heapq.heappush(filaAberta, (f, conexao))
