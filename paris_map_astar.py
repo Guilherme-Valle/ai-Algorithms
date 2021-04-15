@@ -241,6 +241,18 @@ def corLinhaConectandoAntecessores(estacao, conexoes):
             return linha
     return "Nao ha"
 
+def verificaSeHaConexao(origem, destino):
+    for conexao in ESTACOES[destino]['CONEXOES']:
+        estacao_conexao = conexao.split('-')[0]
+        if estacao_conexao == origem:
+            return True
+    return False
+
+def verificaCaminho(caminho):
+    for index, percurso in enumerate(caminho):
+        if index != len(caminho) - 1 and not verificaSeHaConexao(percurso, caminho[index+1]):
+            caminho.remove(caminho[index+1])
+    return caminho
 
 # distancia/velocidade * 60
 
@@ -249,15 +261,15 @@ def astar(origem, destino, velocidade, baldeacao):
     nos_expandidos = []
     filaAberta = []
     heapq.heappush(filaAberta, (0, origem))
-    filaFechada = {}
-    filaFechada[origem] = 0
+    filaFechada = {origem: 0}
     while filaAberta:
         topo_fila = heapq.heappop(filaAberta)
         atual = topo_fila[1]
         nos_expandidos.append(atual)
-        if existeConexaoQueNaoEstaNaFilaFechada(ESTACOES[atual]['CONEXOES'], filaFechada):
+        if existeConexaoQueNaoEstaNaFilaFechada(ESTACOES[atual]['CONEXOES'], filaFechada) or atual == destino:
             caminho.append(atual)
         if atual == destino:
+            caminho = verificaCaminho(caminho)
             caminho_string = '-'.join(map(removeLetras, caminho))
             nos_expandidos_string = '-'.join(map(removeLetras, nos_expandidos))
             distancia = (filaFechada[atual] / float(velocidade)) * 60
@@ -271,7 +283,8 @@ def astar(origem, destino, velocidade, baldeacao):
             if not any(conexao == item for index, item in filaAberta):
                 tem_baldeacao = False
                 if len(caminho) > 1:
-                    if linhaAtual != corLinhaConectandoAntecessores(atual, ESTACOES[caminho[len(caminho) - 2]]["CONEXOES"]):
+                    if linhaAtual != corLinhaConectandoAntecessores(atual,
+                                                                    ESTACOES[caminho[len(caminho) - 2]]["CONEXOES"]):
                         tem_baldeacao = True
 
                 g = filaFechada[atual] + distanciaEntreEstacoes(atual, conexao)
@@ -281,10 +294,10 @@ def astar(origem, destino, velocidade, baldeacao):
                 heapq.heappush(filaAberta, (f, conexao))
 
 
-# entry = input().rstrip()
-# inputs = entry.split(' ')
-# origem = inputs[0]
-# destino = inputs[1]
-# velocidade = input().rstrip()
-# baldeacao = input().rstrip()
-# astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)
+entry = input().rstrip()
+inputs = entry.split(' ')
+origem = inputs[0]
+destino = inputs[1]
+velocidade = input().rstrip()
+baldeacao = input().rstrip()
+astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)
