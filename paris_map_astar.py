@@ -45,7 +45,7 @@ ESTACOES = {
            'E10': 10.3,
            'E11': 19.5,
            'E12': 19.1,
-           'E13': 12.1,
+           'E13': 18.7,
            'E14': 16.6,
            'CONEXOES': ['E2-AZUL', 'E9-VERMELHA', 'E4-AZUL', 'E13-VERMELHA']},
     'E4': {'E1': 24.8,
@@ -55,7 +55,7 @@ ESTACOES = {
            'E5': 13,
            'E6': 14.4,
            'E7': 11.5,
-           'E8': 12.4,
+           'E8': 15.3,
            'E9': 12.6,
            'E10': 16.7,
            'E11': 23.6,
@@ -70,7 +70,7 @@ ESTACOES = {
            'E5': 0,
            'E6': 3,
            'E7': 2.4,
-           'E8': 19.4,
+           'E8': 30,
            'E9': 23.3,
            'E10': 28.2,
            'E11': 34.2,
@@ -111,12 +111,12 @@ ESTACOES = {
     'E8': {'E1': 25.4,
            'E2': 17.3,
            'E3': 13.6,
-           'E4': 12.4,
-           'E5': 19.4,
+           'E4': 15.3,
+           'E5': 30,
            'E6': 22.3,
            'E7': 20,
            'E8': 0,
-           'E9': 8.2,
+           'E9': 9.6,
            'E10': 20.3,
            'E11': 16.1,
            'E12': 6.4,
@@ -130,10 +130,10 @@ ESTACOES = {
            'E5': 23.3,
            'E6': 25.7,
            'E7': 23,
-           'E8': 8.2,
+           'E8': 9.6,
            'E9': 0,
            'E10': 13.5,
-           'E11': 11.2,
+           'E11': 12.2,
            'E12': 10.9,
            'E13': 21.2,
            'E14': 26.6,
@@ -161,7 +161,7 @@ ESTACOES = {
             'E6': 36.7,
             'E7': 34.2,
             'E8': 16.1,
-            'E9': 11.2,
+            'E9': 12.2,
             'E10': 17.6,
             'E11': 0,
             'E12': 24.2,
@@ -185,8 +185,8 @@ ESTACOES = {
             'CONEXOES': ['E8-VERDE']},
     'E13': {'E1': 27.6,
             'E2': 19.1,
-            'E3': 12.1,
-            'E4': 10.6,
+            'E3': 18.7,
+            'E4': 12.8,
             'E5': 14.5,
             'E6': 15.2,
             'E7': 12.4,
@@ -281,10 +281,10 @@ def astar(origem, destino, velocidade, baldeacao):
                 heapq.heappush(filaAberta, (f, conexao))
 
 
-entry = input().rstrip()
-inputs = entry.split(' ')
-origem = inputs[0]
-destino = inputs[1]
-velocidade = input().rstrip()
-baldeacao = input().rstrip()
-astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)
+# entry = input().rstrip()
+# inputs = entry.split(' ')
+# origem = inputs[0]
+# destino = inputs[1]
+# velocidade = input().rstrip()
+# baldeacao = input().rstrip()
+# astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)
