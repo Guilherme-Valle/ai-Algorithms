@@ -216,6 +216,23 @@ ESTACOES = {
 
 }
 
+DISTANCIAS_REAIS = {
+    'E1': {'E2': 10},
+    'E2': {'E1': 10, 'E3': 8.5, 'E9': 10, 'E10': 3.5},
+    'E3': {'E3': 8.5, 'E9': 9.4, 'E13': 18.7},
+    'E4': {'E5': 13, 'E8': 15.3, 'E13': 12.8},
+    'E5': {'E6': 3, 'E7': 2.4, 'E8': 30},
+    'E6': {'E5': 3},
+    'E7': {'E5': 2.4},
+    'E8': {'E4': 15.3, 'E5': 30, 'E9': 9.6, 'E12': 6.4},
+    'E9': {'E2': 10, 'E3': 9.4, 'E8': 9.6, 'E11': 12.2},
+    'E10': {'E2': 3.5},
+    'E11': {'E9': 12.2},
+    'E12': {'E8': 6.4},
+    'E13': {'E3': 18.7, 'E4': 12.8, 'E14': 5.1},
+    'E14': {'E13': 5.1}
+}
+
 
 def removeLetras(string):
     return re.sub('[^0-9]', '', string)
@@ -297,11 +314,10 @@ def astar(origem, destino, velocidade, baldeacao):
                 f = g + distanciaEntreEstacoes(conexao, destino)
                 heapq.heappush(filaAberta, (f, conexao))
 
-
-entry = input().rstrip()
-inputs = entry.split(' ')
-origem = inputs[0]
-destino = inputs[1]
-velocidade = input().rstrip()
-baldeacao = input().rstrip()
-astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)
+# entry = input().rstrip()
+# inputs = entry.split(' ')
+# origem = inputs[0]
+# destino = inputs[1]
+# velocidade = input().rstrip()
+# baldeacao = input().rstrip()
+# astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)
