@@ -269,6 +269,6 @@ def astar(origem, destino, velocidade, baldeacao):
                 heapq.heappush(filaAberta, (f, conexao))
 
 
-#entry = input().rstrip()
-#inputs = entry.split(' ')
-#astar('E' + str(inputs[0]), 'E' + str(inputs[1]), inputs[2], inputs[3])
+entry = input().rstrip()
+inputs = entry.split(' ')
+astar('E' + str(inputs[0]), 'E' + str(inputs[1]), inputs[2], inputs[3])
