@@ -62,7 +62,7 @@ ESTACOES = {
            'E12': 18.6,
            'E13': 10.6,
            'E14': 15.4,
-           'CONEXOES': ['E3-AZUL', 'E13-VERDE', 'E8-VERDE', 'E5-AZUL']},
+           'CONEXOES': ['E3-AZUL', 'E5-AZUL', 'E13-VERDE', 'E8-VERDE']},
     'E5': {'E1': 36.4,
            'E2': 26.6,
            'E3': 18.2,
@@ -122,7 +122,7 @@ ESTACOES = {
            'E12': 6.4,
            'E13': 22.7,
            'E14': 27.6,
-           'CONEXOES': ['E4-VERDE', 'E5-AMARELA', 'E9-AMARELA', 'E12-VERDE']},
+           'CONEXOES': ['E9-AMARELA', 'E4-VERDE', 'E5-AMARELA', 'E12-VERDE']},
     'E9': {'E1': 17.6,
            'E2': 10,
            'E3': 9.4,
@@ -220,8 +220,8 @@ DISTANCIAS_REAIS = {
     'E1': {'E2': 10},
     'E2': {'E1': 10, 'E3': 8.5, 'E9': 10, 'E10': 3.5},
     'E3': {'E2': 8.5, 'E4': 6.3, 'E9': 9.4, 'E13': 18.7},
-    'E4': {'E3': 6.3 ,'E5': 13, 'E8': 15.3, 'E13': 12.8},
-    'E5': {'E6': 3, 'E7': 2.4, 'E8': 30},
+    'E4': {'E3': 6.3, 'E5': 13, 'E8': 15.3, 'E13': 12.8},
+    'E5': {'E4': 13, 'E6': 3, 'E7': 2.4, 'E8': 30},
     'E6': {'E5': 3},
     'E7': {'E5': 2.4},
     'E8': {'E4': 15.3, 'E5': 30, 'E9': 9.6, 'E12': 6.4},
@@ -241,8 +241,10 @@ def removeLetras(string):
 def distanciaLinhaRetaEntreEstacoes(origem, destino):
     return ESTACOES[origem][destino]
 
+
 def distanciaRealEntreEstacoes(origem, destino):
     return DISTANCIAS_REAIS[origem][destino]
+
 
 def existeConexaoQueNaoEstaNaFilaFechada(conexoes, fila):
     for conexao in conexoes:
@@ -282,6 +284,7 @@ def astar(origem, destino, velocidade, baldeacao):
     caminho = []
     nos_expandidos = []
     filaAberta = []
+    nos_processados = []
     heapq.heappush(filaAberta, (0, origem))
     filaFechada = {origem: 0}
     while filaAberta:
@@ -291,20 +294,21 @@ def astar(origem, destino, velocidade, baldeacao):
         if existeConexaoQueNaoEstaNaFilaFechada(ESTACOES[atual]['CONEXOES'], filaFechada) or atual == destino:
             caminho.append(atual)
         if atual == destino:
+            # print(caminho)
             caminho = verificaCaminho(caminho)
             caminho_string = '-'.join(map(removeLetras, caminho))
             nos_expandidos_string = '-'.join(map(removeLetras, nos_expandidos))
-            distancia = (filaFechada[atual] / int(velocidade)) * 60
-            print(nos_expandidos_string + "\n" + caminho_string + "\n" + "%.1f" % distancia)
+            tempo = (filaFechada[atual] / int(velocidade)) * 60
+            print(nos_expandidos_string + "\n" + caminho_string + "\n" + "%.1f" % tempo)
+            # print(filaFechada)
             break
         for no in ESTACOES[atual]['CONEXOES']:
             conexao = no.split('-')[0]
             linhaAtual = no.split('-')[1]
-            if conexao in filaFechada:
-                continue
-            if not any(conexao == item for index, item in filaAberta):
+            if conexao not in nos_expandidos:
                 tem_baldeacao = False
                 if len(caminho) > 1:
+                    caminho = verificaCaminho(caminho)
                     if linhaAtual != corLinhaConectandoAntecessores(atual,
                                                                     ESTACOES[caminho[len(caminho) - 2]]["CONEXOES"]):
                         # print("Baldeacao entre " + caminho[len(caminho) - 2] + ",  " +  atual +" e " + conexao)
@@ -312,14 +316,20 @@ def astar(origem, destino, velocidade, baldeacao):
 
                 g = filaFechada[atual] + distanciaRealEntreEstacoes(atual, conexao)
                 g += (int(velocidade) * int(baldeacao)) / 60 if tem_baldeacao else 0
-                filaFechada[conexao] = g
+                bald = (int(velocidade) * int(baldeacao)) / 60 if tem_baldeacao else 0
+                # print(atual + ' -> ' + conexao + ': ' + str(filaFechada[atual]) + " + " + str(
+                #     distanciaRealEntreEstacoes(atual, conexao) + bald) + ' = ' + str(g) + ' (' + str((g/velocidade)*60) + ')')
+                if conexao in filaFechada:
+                    filaFechada[conexao] = g if filaFechada[conexao] > g else filaFechada[conexao]
+                else:
+                    filaFechada[conexao] = g
                 f = g + distanciaLinhaRetaEntreEstacoes(conexao, destino)
                 heapq.heappush(filaAberta, (f, conexao))
 
-# entry = input().rstrip()
-# inputs = entry.split(' ')
-# origem = inputs[0]
-# destino = inputs[1]
-# velocidade = input().rstrip()
-# baldeacao = input().rstrip()
-# astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)
+entry = input().rstrip()
+inputs = entry.split(' ')
+origem = inputs[0]
+destino = inputs[1]
+velocidade = input().rstrip()
+baldeacao = input().rstrip()
+astar('E' + str(origem), 'E' + str(destino), velocidade, baldeacao)

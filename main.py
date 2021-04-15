@@ -5,7 +5,7 @@ from paris_map_astar import *
 import heapq
 
 if __name__ == '__main__':
-    astar('E12', 'E6', 20, 1)
+    astar('E12', 'E3', 40, 10)
     # romania_astar('Arad', 'Bucharest')
     # grafo = Grafo()
     # grafo.adicionaAresta(1, 2)
