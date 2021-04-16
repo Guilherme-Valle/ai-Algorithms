@@ -1,5 +1,6 @@
 import heapq
 import re
+import math
 
 ESTADOS = {
     "1": {
@@ -183,3 +184,53 @@ ESTADOS = {
         "CONEXOES": ['10', '11'],
     },
 }
+
+
+def existeConexaoQueNaoEstaNaFilaFechada(conexoes, fila):
+    for conexao in conexoes:
+        if conexao not in fila:
+            return True
+    return False
+
+
+def distanciaEntreEstados(origem, destino):
+    return ESTADOS[origem][destino]
+
+
+def astarCOVID(origem, destino, qtd_vacinas, taxas_estados):
+    caminho = []
+    filaAberta = []
+    nos_expandidos = []
+    heapq.heappush(filaAberta, (0, origem))
+    filaFechada = {origem: 0}
+    while filaAberta:
+        atual = heapq.heappop(filaAberta)[1]
+        nos_expandidos.append(atual)
+        if existeConexaoQueNaoEstaNaFilaFechada(ESTADOS[str(atual)]['CONEXOES'], filaFechada) or atual == destino:
+            caminho.append(atual)
+        if atual == destino:
+            vacinas_utilizadas = 0
+            for etapa in caminho:
+                vacinas_utilizadas += math.floor(int(qtd_vacinas) * (0.2 * (1 - float(taxas_estados[etapa]))))
+            print('-'.join(caminho) + '\n' + str(int(qtd_vacinas) - int(vacinas_utilizadas)))
+            break
+        for no in ESTADOS[atual]['CONEXOES']:
+            if no not in nos_expandidos:
+                g = filaFechada[atual] + distanciaEntreEstados(atual, no)
+                if no in filaFechada:
+                    filaFechada[str(no)] = g if filaFechada[str(no)] > g else filaFechada[str(no)]
+                else:
+                    filaFechada[str(no)] = g
+                f = g + distanciaEntreEstados(no, destino)
+                heapq.heappush(filaAberta, (f, no))
+
+
+entry = input().rstrip()
+origem, destino = entry.split(' ')
+vacinas = input().rstrip()
+dicionario = {}
+for valores in range(12):
+    valor = input().rstrip()
+    estado, indice = valor.split(' ')
+    dicionario[estado] = indice
+astarCOVID(str(origem), str(destino), vacinas, dicionario)
