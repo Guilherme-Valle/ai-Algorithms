@@ -58,7 +58,7 @@ def minmax(tabuleiro, profundidade, turnoMax, n):
         return 1000
     if valorMovimento == LANCE_ADVERSARIO:
         return -1000
-    if max:
+    if turnoMax:
         melhorMovimento = -1000
         for i in range(n):
             for j in range(n):
@@ -107,12 +107,7 @@ def jogoDaVelha(tabuleiro, n):
     print(melhorLance)
 
 
-# 1 - Verifica se há lances válidos
-# 2 - Verifica se há vencedor
-# 3 - Jogada que evita derrota
-# 4 - Jogada vencedora
-# 5 - Jogada na diagonal
-# 6 - Último lance válido
+
 n = int(input().rstrip())
 estados = {}
 
