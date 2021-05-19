@@ -1,5 +1,4 @@
-
-
+# Dicionario a ser utilizado no algoritmo
 dicionario_atributos = {}
 
 numero_de_registros, numero_de_atributos = input().rstrip().split(' ')
@@ -11,6 +10,7 @@ total_casos_1 = 0
 for i in range(numero_de_registros):
     atributos = input().rstrip().split(' ')
     dicionario_atributos[i] = {}
+    # Faz a totalização do número de registros com as classes 0 ou 1 para utilizar no cálculo
     if int(atributos[numero_de_atributos-1]) == 1:
         total_casos_1 += 1
     else:
