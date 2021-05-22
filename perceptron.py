@@ -18,31 +18,15 @@ def funcao_escada(x):
 
 def testa_registro(registro, teste_bias):
     soma_valor = 0
-    #print(registro)
-    #print('Pesos pro teste do registro: ')
-    #print(pesos)
     for indice in range(numero_atributos - 1):
-     #   print('Conta de valor: ' + str(registro[indice])  + ' * (' + str(pesos[indice]) + ')')
         soma_valor += registro[indice] * pesos[indice]
-    #print('Conta bias: 1 *' + str(teste_bias) )
     soma_valor += 1*teste_bias
-    #print('Soma: ' + str(soma_valor))
     return soma_valor
 
 def atualiza_pesos(atributo, bias, valor_esperado, valor_retornado):
-    #print('Pesos antigos: ')
-    #print(pesos)
-    #print('Resultado esperado: ' + str(valor_esperado))
-    #print('Resultado retornado: ' + str(valor_retornado))
     for i in range(numero_atributos - 1):
-        #print('Conta peso: ' + str(pesos[i]) + ' + (' + str(taxa_de_aprendizado) + ') * ' + str(atributo[i]) + ' * ('
-        #      + str(valor_esperado) + ' - (' + str(valor_retornado) + ')')
         pesos[i] = pesos[i] + (taxa_de_aprendizado * atributo[i] * (valor_esperado - (valor_retornado)))
-        #print('w' + str(i) + ' = ' + str(pesos[i]))
     bias += (taxa_de_aprendizado * (valor_esperado - (valor_retornado)))
-    #print('Pesos novos: ')
-    #print(pesos)
-    #print('Bias novo:' + str(bias))
     return bias
 
 def verifica_se_rede_esta_treinada(bias):
