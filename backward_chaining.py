@@ -20,8 +20,8 @@ numero_de_regras = int(input().rstrip())
 print(numero_de_regras)
 for i in range(numero_de_regras):
     regra = input().rstrip().split('=>')
-    variaveis.append(regra[0].split('^'))
-    variaveis.append(regra[0].split('|'))
+    for variavel in regra[0].split(' '):
+        variaveis.append(variavel)
     regras[regra[1].strip()] = regra[0].strip().replace('^', "and").replace('|', "or")
 
 base = input().rstrip().split(',')
