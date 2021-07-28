@@ -1,2 +1,2 @@
 # ai-Algorithms
-AI algorithms implemented for the MATA64 discipline at UFBA (Federal University of Bahia). Comments and code are in Portuguese.
+AI algorithms implemented for the Artificial Intelligence discipline at UFBA (Federal University of Bahia). Most comments and codes are in Portuguese.
